@@ -1,6 +1,11 @@
-server:
- port: 8801
 spring:
- application:
-  name: guqing-config
-  
+ config:
+  name: guqing-config-center
+ cloud:
+  label: master
+  config:
+   server:
+    git:
+     uri: G://guqing-config-repo/# https://github.com/zuiliushang/guqing-config-repo
+     # force-pull: true
+     searchPaths: guqing-config
