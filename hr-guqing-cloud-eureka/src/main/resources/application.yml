@@ -1,0 +1,30 @@
+server: 
+ port: 8761
+spring:
+ application:
+  name: hr-guqing-cloud-eureka
+ profiles:
+  active: dev
+eureka:
+ client:
+  register-with-eureka: false
+  fetch-registry: false
+  service-url:
+   defaultZone: http://user:password@127.0.0.1/eureka
+  healthcheck:
+   enabled: true
+  instance:
+   prefer-ip-address: true
+   hostname: ${spring.cloud.client.ipAddress}
+   instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+ server:
+  enable-self-preservation: true
+security:
+ basic:
+  enabled: true
+ user:
+  name: user
+  password: password
+logging:
+ level:
+  root: INFO

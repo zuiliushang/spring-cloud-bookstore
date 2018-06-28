@@ -1,11 +1,10 @@
-server:
- port: 8761
-eureka:
- client:
-  register-with-eureka: false
-  fetch-registry: false
 spring:
  cloud:
   config:
-   discovery:
-    enabled: true
+   uri: http://localhost:8888
+   profile: dev
+   label: master
+   username: ''
+   password: ''
+ profiles:
+  active: dev
