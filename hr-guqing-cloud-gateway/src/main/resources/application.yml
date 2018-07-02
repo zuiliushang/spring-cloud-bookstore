@@ -1,5 +1,5 @@
 server: 
- port: 8888
+ port: 9001
 eureka:
  client:
   register-with-eureka: true
@@ -25,16 +25,14 @@ logging:
   root: INFO
 spring:
  application:
-  name: hr-guqing-cloud-config
- cloud:
-  config:
-   server:
-    git:
-     uri: https://github.com/zuiliushang/spring-cloud-guqing
-     search-paths:
-      - '{application}/src/main/resources'
-      - '{application}/src/main/resources/config'
-     username: ''
-     password: ''
+  name: hr-guqing-cloud-gateway
  profiles:
   active: dev
+zuul:
+ ignoredServices: '*'
+ ignore-local-service: false
+ ignored-pattern:
+ routes:
+  service-bookstore:
+   path: /guqing/api/bookstore
+   serviceId: hr-guqing-cloud-bookstore
