@@ -1,5 +1,10 @@
 server: 
- port: 8888
+ port: 8081
+spring:
+ application:
+  name: hr-guqing-cloud-bookstore
+ profiles:
+  active: dev
 eureka:
  client:
   register-with-eureka: true
@@ -23,18 +28,3 @@ security:
 logging:
  level:
   root: INFO
-spring:
- application:
-  name: hr-guqing-cloud-config
- cloud:
-  config:
-   server:
-    git:
-     uri: https://github.com/zuiliushang/spring-cloud-guqing
-     search-paths:
-      - '{application}/src/main/resources'
-      - '{application}src/main/resources/config'
-     username: ''
-     password: ''
- profiles:
-  active: dev
