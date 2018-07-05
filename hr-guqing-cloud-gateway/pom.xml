@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.RELEASE</version>
+		<version>2.0.3.RELEASE</version>
 	</parent>
 	<properties>
 		<mybatis.version>3.4.5</mybatis.version>
@@ -26,7 +26,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Finchley.M9</version>
+				<version>Finchley.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -53,12 +53,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
-		<!-- mysql -->
-		<dependency>
+		 <!-- mysql -->
+		<!--<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- mybatis -->
+		mybatis
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -79,7 +79,7 @@
 			<artifactId>mybatis-generator-core</artifactId>
 			<version>${mybatis.generator.version}</version>
 		</dependency>
-		<!-- tk -->
+		tk
 		<dependency>
 			<groupId>tk.mybatis</groupId>
 			<artifactId>mapper</artifactId>
@@ -95,7 +95,7 @@
 			<artifactId>mapper-spring-boot-autoconfigure</artifactId>
 			<version>${tk.mybatis.starter}</version>
 		</dependency>
-		<!-- pagehelper -->
+		pagehelper
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
@@ -110,7 +110,7 @@
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>${hibernate.jpa.version}</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	<build>
 		<plugins>

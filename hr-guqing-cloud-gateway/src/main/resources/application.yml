@@ -1,3 +1,8 @@
+spring:
+ application:
+  name: hr-guqing-cloud-gateway
+ profiles:
+  active: dev
 server: 
  port: 9001
 eureka:
@@ -12,27 +17,29 @@ eureka:
    prefer-ip-address: true
    hostname: ${spring.cloud.client.ipAddress}
    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
- server:
-  enable-self-preservation: true
-security:
- basic:
-  enabled: true
- user:
-  name: user
-  password: password
 logging:
  level:
   root: INFO
-spring:
- application:
-  name: hr-guqing-cloud-gateway
- profiles:
-  active: dev
-zuul:
- ignoredServices: '*'
+zuul: 
+ # ignoredServices: '*'
  ignore-local-service: false
- ignored-pattern:
+ ignored-patterns: 
  routes:
-  service-bookstore:
-   path: /guqing/api/bookstore
+  busine-greeting:
+   path: /guqing/api/greeting/**
+   url: forward:/forward
+  service-bookstore: 
+   path: /guqing/api/bookstore/**
    serviceId: hr-guqing-cloud-bookstore
+   
+ribbon:
+  ConnectTimeout: 15000
+  ReadTimeout: 60000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
