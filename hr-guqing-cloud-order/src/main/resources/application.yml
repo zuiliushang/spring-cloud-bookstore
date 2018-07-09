@@ -1,0 +1,7 @@
+server:
+ port: 8802
+spring:
+ application:
+  name: hr-guqing-cloud-order
+ profiles: 
+  active: dev

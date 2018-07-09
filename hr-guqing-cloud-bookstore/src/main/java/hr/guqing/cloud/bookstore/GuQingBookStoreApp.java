@@ -38,9 +38,50 @@ public class GuQingBookStoreApp {
 		return Mono.just(greet);
 	}
 	
+	@GetMapping("/")
+	public Mono<Book> getBookById(int id){
+		Book book = new Book();
+		book.setId(id);
+		book.setName("JAVA");
+		book.setInfo("JAVABOOK");
+		return Mono.just(book);
+	}
 	
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(GuQingBookStoreApp.class).web(WebApplicationType.REACTIVE).run(args);
+	}
+	
+}
+class Book{
+	
+	private int id;
+	
+	private String name;
+
+	private String info;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	
 }

@@ -1,26 +1,19 @@
 package hr.guqing.cloud.gateway;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.actuate.trace.http.HttpTrace.Response;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.MediaType;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.server.RequestPredicates;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.reactive.function.server.ServerResponse;
 
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @EnableZuulProxy
 @RestController
+@ComponentScan
 public class GuQingGateWayApp {
 	
 	@Value("${greeting}")
