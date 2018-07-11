@@ -3,18 +3,24 @@ package hr.guqing.cloud.order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerExchangeFilterFunction;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import com.google.common.collect.ImmutableMap;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @RestController
+@EnableCircuitBreaker
 public class GuQingOrderApp {
 	
 	@Autowired
@@ -22,7 +28,29 @@ public class GuQingOrderApp {
 	
 	@GetMapping("/")
 	public Mono<Order> getOrder(@RequestParam(required=true)int orderId){
-		ResponseEntity<Book> bookEntity = restTemplate.getForEntity("http://hr-guqing-cloud-bookstore/", Book.class, ImmutableMap.builder().put("id", orderId).build());
+		Order order = getOrderByOrderId(orderId);
+		return Mono.just(order);
+	}
+	
+	@Autowired
+	LoadBalancerExchangeFilterFunction lbFunction;
+	
+	@GetMapping("/test")
+	public Mono<Order> getOrderTest(@RequestParam(required=true)int orderId){
+		return WebClient.builder().baseUrl("http://hr-guqing-cloud-bookstore")
+				.filter(lbFunction)
+				.build()
+				.get()
+				.uri("/?id="+orderId)
+				.retrieve()
+				.bodyToMono(Order.class);
+	}
+	
+	
+	@HystrixCommand(fallbackMethod="defaultGetOrderByOrderId")
+	public Order getOrderByOrderId(int orderId) {
+		HttpEntity httpEntity = new HttpEntity(null);
+		ResponseEntity<Book> bookEntity = restTemplate.exchange("http://hr-guqing-cloud-bookstore?id="+orderId, HttpMethod.GET,httpEntity,Book.class);
 		Book book = bookEntity.getBody();
 		Order order = new Order();
 		order.setId(book.getId());
@@ -30,8 +58,13 @@ public class GuQingOrderApp {
 		order.setName(book.getName());
 		order.setOrderId(orderId);
 		order.setOrderName("JAVAORDER");
-		return Mono.just(order);
+		return order;
 	}
+	
+	public Order defaultGetOrderByOrderId(int orderId) {
+		return new Order();
+	}
+	
 	
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(GuQingOrderApp.class).run(args);

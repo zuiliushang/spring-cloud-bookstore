@@ -32,7 +32,7 @@ public class GuQingBookStoreApp {
 	}
 	
 	@GetMapping("/")
-	public Mono<Book> getBookById(int id){
+	public Mono<Book> getBookById(Integer id){
 		Book book = new Book();
 		book.setId(id);
 		book.setName("JAVA");
