@@ -21,7 +21,7 @@ logging:
  level:
   root: INFO
 zuul: 
- # ignoredServices: '*'
+ ignoredServices: '*'
  ignore-local-service: false
  ignored-patterns: 
  routes:
@@ -31,7 +31,9 @@ zuul:
   service-bookstore: 
    path: /guqing/api/bookstore/**
    serviceId: hr-guqing-cloud-bookstore
-   
+  service-order:
+   path: /guqing/api/bookstore/**
+   serviceId: hr-guqing-cloud-order
 ribbon:
   ConnectTimeout: 15000
   ReadTimeout: 60000
